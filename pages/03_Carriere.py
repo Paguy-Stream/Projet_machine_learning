@@ -1,5 +1,5 @@
 """
-Page de feuille de route carrière Data.
+Page de feuille de route carrière Data - VERSION CORRIGÉE.
 
 Cette page permet de :
 - Définir son profil professionnel actuel
@@ -9,16 +9,14 @@ Cette page permet de :
 - Projeter sa progression salariale (3 scénarios)
 - Simuler une négociation salariale
 
+FIX: Ajout de clés uniques pour éviter l'erreur removeChild
+
 Architecture:
     - Module principal : Orchestration et formulaire
     - career_analysis : Scorecard et diagnostic
     - career_roadmap : Roadmap pédagogique et matrice effort/impact
     - career_transitions : Transitions et projections
     - career_export : Négociation, export et navigation
-
-Version: 2.0
-Auteur: Data Team
-Date: Janvier 2026
 """
 
 import streamlit as st
@@ -159,6 +157,8 @@ def render_profile_form() -> Optional[Dict[str, Any]]:
         Le formulaire est divisé en 2 sections :
         1. Informations professionnelles
         2. Stack technique actuelle
+        
+    FIX: Ajout de clés uniques et clear_on_submit=False
     """
     st.markdown("### 👤 Étape 1 : Définissez votre profil actuel")
     
@@ -170,7 +170,8 @@ def render_profile_form() -> Optional[Dict[str, Any]]:
         - **Toutes les données restent privées et ne sont jamais stockées**
         """)
     
-    with st.form("career_profile"):
+    # FIX: Ajout de clear_on_submit=False pour éviter les rerenders multiples
+    with st.form("career_profile_form", clear_on_submit=False):
         # Section 1 : Informations professionnelles
         professional_data = _render_professional_section()
         
@@ -181,10 +182,12 @@ def render_profile_form() -> Optional[Dict[str, Any]]:
         
         st.markdown("---")
         
+        # FIX: Ajout d'une clé unique au bouton submit
         submitted = st.form_submit_button(
             "🚀 Générer ma feuille de route",
             type="primary",
-            use_container_width=True
+            use_container_width=True,
+            key="career_submit_btn"
         )
         
         if submitted:
@@ -194,7 +197,11 @@ def render_profile_form() -> Optional[Dict[str, Any]]:
 
 
 def _render_professional_section() -> Dict[str, Any]:
-    """Affiche la section informations professionnelles."""
+    """
+    Affiche la section informations professionnelles.
+    
+    FIX: Ajout de clés uniques à tous les widgets
+    """
     st.markdown("#### 💼 Informations professionnelles")
     
     col1, col2, col3 = st.columns(3)
@@ -204,7 +211,8 @@ def _render_professional_section() -> Dict[str, Any]:
             "Type de poste actuel",
             Config.JOB_TYPES,
             index=0,
-            help="Votre rôle principal en ce moment"
+            help="Votre rôle principal en ce moment",
+            key="career_job_type"  # FIX: Clé unique
         )
         experience = st.number_input(
             "Années d'expérience",
@@ -212,7 +220,8 @@ def _render_professional_section() -> Dict[str, Any]:
             max_value=30.0,
             value=4.0,
             step=0.5,
-            help="Expérience totale dans la Data"
+            help="Expérience totale dans la Data",
+            key="career_experience"  # FIX: Clé unique
         )
     
     with col2:
@@ -220,13 +229,15 @@ def _render_professional_section() -> Dict[str, Any]:
             "Ville actuelle",
             Config.CITIES,
             index=0,
-            help="Votre lieu de travail principal"
+            help="Votre lieu de travail principal",
+            key="career_location"  # FIX: Clé unique
         )
         sector = st.selectbox(
             "Secteur actuel",
             Config.SECTORS,
             index=1,
-            help="Industrie de votre entreprise"
+            help="Industrie de votre entreprise",
+            key="career_sector"  # FIX: Clé unique
         )
     
     with col3:
@@ -234,12 +245,14 @@ def _render_professional_section() -> Dict[str, Any]:
             "Niveau d'études",
             Config.EDUCATION_LEVELS,
             index=4,
-            help="Diplôme le plus élevé obtenu"
+            help="Diplôme le plus élevé obtenu",
+            key="career_education"  # FIX: Clé unique
         )
         telework = st.slider(
             "Télétravail (j/sem)",
             0, 5, 2,
-            help="Nombre de jours de télétravail par semaine"
+            help="Nombre de jours de télétravail par semaine",
+            key="career_telework"  # FIX: Clé unique
         )
     
     return {
@@ -253,38 +266,42 @@ def _render_professional_section() -> Dict[str, Any]:
 
 
 def _render_skills_section() -> Dict[str, bool]:
-    """Affiche la section stack technique."""
+    """
+    Affiche la section stack technique.
+    
+    FIX: Ajout de clés uniques à toutes les checkboxes
+    """
     st.markdown("#### 🛠️ Votre stack technique actuelle")
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("**Langages & Outils**")
-        python = st.checkbox("Python", value=True)
-        sql = st.checkbox("SQL", value=True)
-        r = st.checkbox("R", value=False)
+        python = st.checkbox("Python", value=True, key="career_skill_python")  # FIX
+        sql = st.checkbox("SQL", value=True, key="career_skill_sql")  # FIX
+        r = st.checkbox("R", value=False, key="career_skill_r")  # FIX
     
     with col2:
         st.markdown("**Visualisation & BI**")
-        tableau = st.checkbox("Tableau", value=False)
-        power_bi = st.checkbox("Power BI", value=False)
+        tableau = st.checkbox("Tableau", value=False, key="career_skill_tableau")  # FIX
+        power_bi = st.checkbox("Power BI", value=False, key="career_skill_powerbi")  # FIX
     
     with col3:
         st.markdown("**Cloud & Big Data**")
-        aws = st.checkbox("AWS", value=False)
-        azure = st.checkbox("Azure", value=False)
-        spark = st.checkbox("Spark", value=False)
+        aws = st.checkbox("AWS", value=False, key="career_skill_aws")  # FIX
+        azure = st.checkbox("Azure", value=False, key="career_skill_azure")  # FIX
+        spark = st.checkbox("Spark", value=False, key="career_skill_spark")  # FIX
     
     col4, col5 = st.columns(2)
     
     with col4:
         st.markdown("**Intelligence Artificielle**")
-        ml = st.checkbox("Machine Learning", value=False)
-        dl = st.checkbox("Deep Learning", value=False)
+        ml = st.checkbox("Machine Learning", value=False, key="career_skill_ml")  # FIX
+        dl = st.checkbox("Deep Learning", value=False, key="career_skill_dl")  # FIX
     
     with col5:
         st.markdown("**Data Engineering**")
-        etl = st.checkbox("ETL / Pipelines", value=False)
+        etl = st.checkbox("ETL / Pipelines", value=False, key="career_skill_etl")  # FIX
     
     return {
         'contient_python': python,
