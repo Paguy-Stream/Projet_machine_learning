@@ -57,7 +57,7 @@ class Config:
     # CHEMINS DES FICHIERS
     # ========================================================================
     
-    BASE_DIR = Path(__file__).parent.parent
+    BASE_DIR = Path.cwd()
     MODEL_PATH = BASE_DIR / "models" / "best_model_XGBoost_fixed.pkl"
     DATA_PATH = BASE_DIR / "output" / "hellowork_cleaned_complete.csv"
     REPORT_PATH = (
