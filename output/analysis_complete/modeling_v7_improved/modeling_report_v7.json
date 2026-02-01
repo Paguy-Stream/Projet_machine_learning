@@ -1,0 +1,149 @@
+{
+  "timestamp": "2026-01-22T01:44:27.930083",
+  "best_model": {
+    "name": "XGBoost",
+    "model_path": "C:\\Users\\emman\\Documents\\Webscrapping\\output\\analysis_complete\\modeling_v7_improved\\models\\best_model_XGBoost.pkl",
+    "best_params": {
+      "regressor__learning_rate": 0.05,
+      "regressor__max_depth": 4,
+      "regressor__n_estimators": 200,
+      "regressor__reg_alpha": 10.0,
+      "regressor__reg_lambda": 5.0
+    }
+  },
+  "performance_metrics": {
+    "train_mae": 4513.555625801656,
+    "test_mae": 5163.488885009311,
+    "train_rmse": 6062.277689973185,
+    "test_rmse": 6945.169124158413,
+    "train_r2": 0.4769690328680678,
+    "test_r2": 0.33674954206050334,
+    "cv_mae_mean": 5188.26092436088,
+    "cv_mae_std": 183.10726501884514,
+    "cv_r2_mean": 0.3174379436448249,
+    "cv_r2_std": 0.04348659108740817,
+    "overfitting_score": 0.14021949080756446,
+    "error_percentage": 10.537212025157652
+  },
+  "model_comparison": [
+    {
+      "Model": "XGBoost",
+      "Test MAE": 5163.488885009311,
+      "CV MAE": 5188.26092436088,
+      "Test R²": 0.33674954206050334,
+      "CV R²": 0.3174379436448249,
+      "Overfitting (ΔR²)": 0.14021949080756446,
+      "Stabilité": 0.9952253674761701,
+      "Score Composite": 0.4149543243321264
+    },
+    {
+      "Model": "LightGBM",
+      "Test MAE": 5097.456513202415,
+      "CV MAE": 5196.575796518565,
+      "Test R²": 0.34552726234182696,
+      "CV R²": 0.3169897003631642,
+      "Overfitting (ΔR²)": 0.18092243103610073,
+      "Stabilité": 0.9809260391462866,
+      "Score Composite": 0.41140077977132733
+    },
+    {
+      "Model": "GradientBoosting",
+      "Test MAE": 5203.375801697666,
+      "CV MAE": 5210.605170905676,
+      "Test R²": 0.32619578723555454,
+      "CV R²": 0.31305066200409765,
+      "Overfitting (ΔR²)": 0.2055702759831497,
+      "Stabilité": 0.9986125663006716,
+      "Score Composite": 0.4035589991572705
+    },
+    {
+      "Model": "ElasticNet",
+      "Test MAE": 5615.959254462392,
+      "CV MAE": 5671.381649379686,
+      "Test R²": 0.26091823080096965,
+      "CV R²": 0.21917745185941656,
+      "Overfitting (ΔR²)": -0.005020553342882539,
+      "Stabilité": 0.9902277084591273,
+      "Score Composite": 0.36866812490432654
+    },
+    {
+      "Model": "Lasso",
+      "Test MAE": 5564.3710109201475,
+      "CV MAE": 5631.025844590522,
+      "Test R²": 0.26166320057541337,
+      "CV R²": 0.21696451452647994,
+      "Overfitting (ΔR²)": 0.0055279427210827015,
+      "Stabilité": 0.988162932383909,
+      "Score Composite": 0.36683442679278294
+    },
+    {
+      "Model": "Ridge",
+      "Test MAE": 5579.679848493174,
+      "CV MAE": 5639.242382682454,
+      "Test R²": 0.2608496201274594,
+      "CV R²": 0.2167704025262172,
+      "Overfitting (ΔR²)": 0.008637966892025672,
+      "Stabilité": 0.9894378481811332,
+      "Score Composite": 0.36639474175587305
+    },
+    {
+      "Model": "RandomForest",
+      "Test MAE": 5730.448055445708,
+      "CV MAE": 5840.114074164671,
+      "Test R²": 0.2587399686966009,
+      "CV R²": 0.22436749358190716,
+      "Overfitting (ΔR²)": 0.025103002601224444,
+      "Stabilité": 0.9812219389336758,
+      "Score Composite": 0.3645403230798252
+    }
+  ],
+  "data_info": {
+    "train_samples": 2144,
+    "test_samples": 537,
+    "total_samples": 2681,
+    "features_count": 29,
+    "features_list": [
+      "job_type_with_desc",
+      "seniority",
+      "contract_type_clean",
+      "location_final",
+      "sector_clean",
+      "education_clean",
+      "experience_final",
+      "contient_sql",
+      "contient_python",
+      "contient_r",
+      "contient_tableau",
+      "contient_power_bi",
+      "contient_aws",
+      "contient_azure",
+      "contient_gcp",
+      "contient_spark",
+      "contient_machine_learning",
+      "contient_etl",
+      "skills_count",
+      "technical_score",
+      "has_teletravail",
+      "has_mutuelle",
+      "has_tickets",
+      "has_prime",
+      "benefits_score",
+      "telework_numeric",
+      "is_grande_ville",
+      "description_word_count",
+      "nb_mots_cles_techniques"
+    ],
+    "target_mean": 48914.00583022388,
+    "target_std": 8382.472250485926
+  },
+  "diagnostics": {
+    "overfitting_level": "Modéré",
+    "generalization_quality": "Bonne",
+    "model_stability": 0.9952253674761701
+  },
+  "recommendations": [
+    "Modèle prêt pour le déploiement",
+    "Mettre en place un monitoring basique",
+    "Re-entraîner annuellement"
+  ]
+}
