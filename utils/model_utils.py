@@ -1031,7 +1031,7 @@ class ChartUtils:
             domain={'x': [0, 1], 'y': [0, 1]},
             title={
                 'text': "Positionnement salarial",
-                'font': {'size': 22, 'weight': 'bold'}
+                'font': {'size': 22, 'family': 'Arial Black'}
             },
             delta={
                 'reference': market_median,
@@ -1040,7 +1040,7 @@ class ChartUtils:
             },
             number={
                 'suffix': " €",
-                'font': {'size': 42, 'weight': 'bold'},
+                'font': {'size': 42, 'family': 'Arial Black'},
                 'valueformat': ',.0f'
             },
             gauge={
