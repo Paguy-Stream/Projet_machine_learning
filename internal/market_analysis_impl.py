@@ -172,7 +172,6 @@ def _render_salary_vs_experience(data: pd.DataFrame) -> None:
             'salary_mid': 'Salaire annuel (€)',
             'job_type_simplified': 'Type de poste'
         },
-        trendline="lowess",
         height=500
     )
     

@@ -20,7 +20,7 @@ from typing import Dict, List, Tuple, Optional, Any
 
 from utils.config import Config
 from utils.model_utils import ChartUtils, CalculationUtils, DataDistributions
-from internal.prediction_comparisons import (
+from internal.prediction_comparisons_impl import (
     render_sector_comparison,
     render_experience_projection,
     render_location_comparison,
