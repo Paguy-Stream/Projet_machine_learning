@@ -1,9 +1,10 @@
 """
-PAGE D'ACCUEIL – PRÉDICTEUR DE SALAIRES DATA JOBS
+PAGE D'ACCUEIL – PRÉDICTEUR DE SALAIRES DATA JOBS - VERSION CORRIGÉE
 
 Application Streamlit pour l'estimation de salaires dans les métiers de la Data.
 Basé sur 5 868 offres HelloWork collectées en janvier 2026.
 Modèle : XGBoost v7 optimisé.
+
 """
 
 import streamlit as st
@@ -18,16 +19,6 @@ from typing import Dict, Optional, Tuple
 
 from utils.config import Config, init_session_state, setup_page
 from utils.model_utils import init_model_utils
-
-import os
-
-setup_page() 
-st.write("### 🔍 Debug chemins Streamlit Cloud")
-st.write("**Répertoire courant (cwd)** :", os.getcwd())
-st.write("**Fichier actuel (__file__)** :", __file__)
-st.write("**Path.cwd()** :", Path.cwd())
-st.write("**Path(__file__).resolve()** :", Path(__file__).resolve())
-st.write("**Contenu du dossier courant** :", os.listdir(os.getcwd()))
 
 
 # ============================================================================
@@ -146,10 +137,7 @@ def _load_test_data() -> Optional[np.ndarray]:
     Returns:
         Array numpy des salaires de test ou None
     """
-    test_path = (
-        Config.BASE_DIR / "output" / "analysis_complete" / 
-        "modeling_v7_improved" / "models" / "test_data.pkl"
-    )
+    test_path = Config.TEST_DATA_PATH
     
     if not test_path.exists():
         return None
@@ -175,8 +163,6 @@ def render_sidebar(data: Dict, config: Config) -> None:
     Args:
         data: Dictionnaire des données chargées
         config: Configuration de l'application
-        
-    FIX: Ajout de clés uniques aux boutons
     """
     with st.sidebar:
         _render_sidebar_header()
@@ -255,10 +241,7 @@ def _render_sidebar_actions(data: Dict) -> None:
     
     Args:
         data: Données de l'application
-        
-    FIX: Ajout de clé unique au bouton
     """
-    # FIX: Ajout de key unique
     if st.button("📄 Rapport complet", use_container_width=True, key="sidebar_btn_report"):
         if data.get('report'):
             with st.expander("📊 Rapport de modélisation", expanded=True):
@@ -277,19 +260,12 @@ def render_hero_section(config: Config) -> None:
     
     Args:
         config: Configuration de l'application
-    
-    Note:
-        Le titre principal est géré par setup_page() dans utils/config.py
-        pour éviter la duplication.
-        
-    FIX: Ajout de clé unique au bouton principal
     """
     # CTA principal
     st.markdown("<div style='margin: 20px 0;'></div>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        # FIX: Ajout de key unique
         if st.button(
             "🚀 Obtenir une estimation salariale",
             type="primary",
@@ -567,11 +543,7 @@ def render_top_jobs(dataset: pd.DataFrame) -> None:
 # ============================================================================
 
 def render_navigation_cards() -> None:
-    """
-    Affiche les cartes de navigation principale.
-    
-    FIX: Ajout de clés uniques à tous les boutons de navigation
-    """
+    """Affiche les cartes de navigation principale."""
     st.markdown("""
     <div style='
         text-align: center;
@@ -603,7 +575,6 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        # FIX: Ajout de key unique
         if st.button("Accéder", key="nav_btn_prediction", use_container_width=True):
             st.switch_page("pages/01_Prediction.py")
     
@@ -617,7 +588,6 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        # FIX: Ajout de key unique
         if st.button("Accéder", key="nav_btn_market", use_container_width=True):
             st.switch_page("pages/02_Marche.py")
     
@@ -631,7 +601,6 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        # FIX: Ajout de key unique
         if st.button("Accéder", key="nav_btn_career", use_container_width=True):
             st.switch_page("pages/03_Carriere.py")
 
