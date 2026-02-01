@@ -1,5 +1,5 @@
 """
-Module de gestion des filtres de la page Marché.
+Module de gestion des filtres de la page Marché
 
 Ce module contient toutes les fonctions pour :
 - Afficher les filtres dans la sidebar
@@ -96,6 +96,8 @@ def _render_job_filter(market_data: pd.DataFrame) -> List[str]:
         
     Returns:
         Liste des postes sélectionnés
+        
+    FIX: La clé est déjà "job_filter" donc OK, mais on vérifie l'initialisation
     """
     job_options = sorted(market_data['job_type_simplified'].dropna().unique())
     
@@ -107,7 +109,7 @@ def _render_job_filter(market_data: pd.DataFrame) -> List[str]:
         "Type de poste",
         job_options,
         default=st.session_state.job_filter,
-        key='job_filter',
+        key='market_filter_job',  # FIX: Clé explicite et unique
         help="Sélectionnez un ou plusieurs types de postes"
     )
     
@@ -123,6 +125,8 @@ def _render_location_filter(market_data: pd.DataFrame) -> List[str]:
         
     Returns:
         Liste des villes sélectionnées
+        
+    FIX: Clé unique ajoutée
     """
     location_options = sorted(market_data['location_clean'].dropna().unique())
     
@@ -137,7 +141,7 @@ def _render_location_filter(market_data: pd.DataFrame) -> List[str]:
         "Ville",
         location_options,
         default=st.session_state.location_filter,
-        key='location_filter',
+        key='market_filter_location',  # FIX: Clé explicite et unique
         help="Sélectionnez une ou plusieurs villes"
     )
     
@@ -153,6 +157,8 @@ def _render_sector_filter(market_data: pd.DataFrame) -> List[str]:
         
     Returns:
         Liste des secteurs sélectionnés
+        
+    FIX: Clé unique ajoutée
     """
     sector_options = sorted(market_data['sector_clean'].dropna().unique())
     
@@ -167,7 +173,7 @@ def _render_sector_filter(market_data: pd.DataFrame) -> List[str]:
         "Secteur",
         sector_options,
         default=st.session_state.sector_filter,
-        key='sector_filter',
+        key='market_filter_sector',  # FIX: Clé explicite et unique
         help="Sélectionnez un ou plusieurs secteurs"
     )
     
@@ -183,6 +189,8 @@ def _render_salary_filter(market_data: pd.DataFrame) -> Tuple[float, float]:
         
     Returns:
         Tuple (salaire_min, salaire_max)
+        
+    FIX: Clé unique ajoutée
     """
     salary_min_val = int(market_data['salary_mid'].min())
     salary_max_val = int(market_data['salary_mid'].max())
@@ -193,6 +201,7 @@ def _render_salary_filter(market_data: pd.DataFrame) -> Tuple[float, float]:
         max_value=salary_max_val,
         value=(salary_min_val, salary_max_val),
         step=1000,
+        key='market_filter_salary',  # FIX: Clé unique
         help="Ajustez la fourchette salariale"
     )
     
@@ -208,6 +217,8 @@ def _render_experience_filter(market_data: pd.DataFrame) -> Tuple[float, float]:
         
     Returns:
         Tuple (exp_min, exp_max)
+        
+    FIX: Clé unique ajoutée
     """
     if 'experience_final' not in market_data.columns:
         return 0.0, 30.0
@@ -222,6 +233,7 @@ def _render_experience_filter(market_data: pd.DataFrame) -> Tuple[float, float]:
         max_value=exp_max_val,
         value=(exp_min_val, exp_max_val),
         step=0.5,
+        key='market_filter_experience',  # FIX: Clé unique
         help="Filtrez par niveau d'expérience"
     )
     
@@ -234,6 +246,8 @@ def _render_tech_stack_filter() -> List[str]:
     
     Returns:
         Liste des stacks sélectionnés
+        
+    FIX: Clé unique ajoutée
     """
     tech_options = [
         'Python + Cloud + Spark',
@@ -246,6 +260,7 @@ def _render_tech_stack_filter() -> List[str]:
     tech_filter = st.multiselect(
         "Stack technique",
         tech_options,
+        key='market_filter_tech',  # FIX: Clé unique
         help="Filtrez par stack technique (ET logique)"
     )
     
@@ -262,15 +277,19 @@ def _render_filter_actions(market_data: pd.DataFrame) -> None:
     
     Args:
         market_data: DataFrame du marché
+        
+    FIX: Clés uniques ajoutées aux boutons
     """
     col1, col2 = st.columns(2)
     
     with col1:
-        if st.button("🔄 Réinitialiser", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("🔄 Réinitialiser", use_container_width=True, key='market_btn_reset'):
             _reset_filters()
     
     with col2:
-        if st.button("📊 Tout afficher", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("📊 Tout afficher", use_container_width=True, key='market_btn_show_all'):
             _show_all_filters(market_data)
 
 
@@ -302,10 +321,9 @@ def _show_all_filters(market_data: pd.DataFrame) -> None:
         market_data['sector_clean'].dropna().unique()
     )
     
-    st.session_state.job_filter_all = all_jobs
-    st.session_state.location_filter_all = all_locations
-    st.session_state.sector_filter_all = all_sectors
-    
+    st.session_state.job_filter = all_jobs
+    st.session_state.location_filter = all_locations
+    st.session_state.sector_filter = all_sectors
     
     st.rerun()
 

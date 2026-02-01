@@ -165,6 +165,8 @@ def render_sidebar(data: Dict, config: Config) -> None:
     Args:
         data: Dictionnaire des données chargées
         config: Configuration de l'application
+        
+    FIX: Ajout de clés uniques aux boutons
     """
     with st.sidebar:
         _render_sidebar_header()
@@ -243,8 +245,11 @@ def _render_sidebar_actions(data: Dict) -> None:
     
     Args:
         data: Données de l'application
+        
+    FIX: Ajout de clé unique au bouton
     """
-    if st.button("📄 Rapport complet", use_container_width=True):
+    # FIX: Ajout de key unique
+    if st.button("📄 Rapport complet", use_container_width=True, key="sidebar_btn_report"):
         if data.get('report'):
             with st.expander("📊 Rapport de modélisation", expanded=True):
                 st.json(data['report'])
@@ -266,17 +271,21 @@ def render_hero_section(config: Config) -> None:
     Note:
         Le titre principal est géré par setup_page() dans utils/config.py
         pour éviter la duplication.
+        
+    FIX: Ajout de clé unique au bouton principal
     """
     # CTA principal
     st.markdown("<div style='margin: 20px 0;'></div>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
+        # FIX: Ajout de key unique
         if st.button(
             "🚀 Obtenir une estimation salariale",
             type="primary",
             use_container_width=True,
-            help="Accédez au formulaire de prédiction personnalisée"
+            help="Accédez au formulaire de prédiction personnalisée",
+            key="hero_btn_prediction"
         ):
             st.switch_page("pages/01_Prediction.py")
 
@@ -548,7 +557,11 @@ def render_top_jobs(dataset: pd.DataFrame) -> None:
 # ============================================================================
 
 def render_navigation_cards() -> None:
-    """Affiche les cartes de navigation principale."""
+    """
+    Affiche les cartes de navigation principale.
+    
+    FIX: Ajout de clés uniques à tous les boutons de navigation
+    """
     st.markdown("""
     <div style='
         text-align: center;
@@ -580,7 +593,8 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("Accéder", key="nav_pred", use_container_width=True):
+        # FIX: Ajout de key unique
+        if st.button("Accéder", key="nav_btn_prediction", use_container_width=True):
             st.switch_page("pages/01_Prediction.py")
     
     with col2:
@@ -593,7 +607,8 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("Accéder", key="nav_market", use_container_width=True):
+        # FIX: Ajout de key unique
+        if st.button("Accéder", key="nav_btn_market", use_container_width=True):
             st.switch_page("pages/02_Marche.py")
     
     with col3:
@@ -606,8 +621,9 @@ def render_navigation_cards() -> None:
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("Accéder", key="nav_career", use_container_width=True):
-            st.switch_page("pages/03_Carrière.py")
+        # FIX: Ajout de key unique
+        if st.button("Accéder", key="nav_btn_career", use_container_width=True):
+            st.switch_page("pages/03_Carriere.py")
 
 
 # ============================================================================

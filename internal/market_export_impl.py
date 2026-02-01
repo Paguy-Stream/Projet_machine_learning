@@ -1,11 +1,12 @@
 """
-Module d'export et navigation pour la page Marché.
+Module d'export et navigation pour la page Marché 
 
 Ce module contient les fonctions pour :
 - Export des données filtrées (CSV)
 - Export des statistiques (JSON)
 - Navigation entre les pages
 - Boutons d'aide et actualisation
+
 
 """
 
@@ -68,6 +69,8 @@ def _render_csv_export(filtered_data: pd.DataFrame) -> None:
     
     Args:
         filtered_data: Données à exporter
+        
+    FIX: Clé unique ajoutée au bouton download
     """
     export_cols = [
         'job_type_simplified', 'seniority', 'salary_mid',
@@ -82,12 +85,14 @@ def _render_csv_export(filtered_data: pd.DataFrame) -> None:
     export_data = filtered_data[available_cols].copy()
     csv = export_data.to_csv(index=False).encode('utf-8')
     
+    # FIX: Ajout de clé unique
     st.download_button(
         "📥 Télécharger données filtrées (CSV)",
         data=csv,
         file_name=f"marche_data_jobs_{len(filtered_data)}_offres.csv",
         mime="text/csv",
         use_container_width=True,
+        key='market_export_btn_csv',  # FIX
         help="Exporte les données filtrées au format CSV"
     )
 
@@ -108,6 +113,8 @@ def _render_json_export(
         filtered_data: Données filtrées
         total_size: Nombre total d'offres
         filters_info: Info sur les filtres
+        
+    FIX: Clé unique ajoutée au bouton download
     """
     export_json = _prepare_json_export(
         filtered_data,
@@ -117,12 +124,14 @@ def _render_json_export(
     
     json_str = json.dumps(export_json, indent=2, ensure_ascii=False)
     
+    # FIX: Ajout de clé unique
     st.download_button(
         "📥 Télécharger statistiques (JSON)",
         data=json_str,
         file_name=f"stats_marche_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
         mime="application/json",
         use_container_width=True,
+        key='market_export_btn_json',  # FIX
         help="Exporte les statistiques et multiplicateurs au format JSON"
     )
 
@@ -258,27 +267,33 @@ def _calculate_top_stacks_for_export(data: pd.DataFrame) -> List[Dict]:
 # ============================================================================
 
 def _render_navigation_buttons() -> None:
-    """Affiche les boutons de navigation entre pages."""
+    """
+    Affiche les boutons de navigation entre pages.
+    """
     st.markdown("### 🧭 Navigation")
     
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        if st.button("🏠 Accueil", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("🏠 Accueil", use_container_width=True, key='market_nav_btn_home'):
             st.switch_page("01_Accueil.py")
     
     with col2:
-        if st.button("🔮 Prédiction", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("🔮 Prédiction", use_container_width=True, key='market_nav_btn_prediction'):
             st.switch_page("pages/01_Prediction.py")
     
     with col3:
-        if st.button("🔄 Actualiser", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("🔄 Actualiser", use_container_width=True, key='market_nav_btn_refresh'):
             st.cache_data.clear()
             Config.reload_dynamic_data()
             st.rerun()
     
     with col4:
-        if st.button("💡 Aide", use_container_width=True):
+        # FIX: Clé unique
+        if st.button("💡 Aide", use_container_width=True, key='market_nav_btn_help'):
             _show_help_modal()
 
 
@@ -333,7 +348,7 @@ def _render_footer(total_size: int) -> None:
         <p>© 2026 Prédicteur de salaires Data Jobs v2.0 • 
         Données : HelloWork ({total_size:,} offres, janvier 2026)</p>
         <p style='font-size: 12px;'>
-        ✅ Multiplicateurs s • Insights • Benchmark personnel
+        ✅ Multiplicateurs dynamiques • Insights • Benchmark personnel
         </p>
     </div>
     """, unsafe_allow_html=True)
