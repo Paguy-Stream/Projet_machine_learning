@@ -45,15 +45,17 @@ htmlcov/
 *.cover
 .hypothesis/
 
-# Données (IMPORTANT!)
+# Données
 data/raw/*
 data/processed/*
 output/*
-!data/.gitkeep
+!output/hellowork_cleaned_complete.csv
+!output/test_data.pkl
 !output/.gitkeep
 
-# Modèles volumineux (optionnel)
+# Modèles
 models/*.pkl
+!models/best_model_XGBoost_fixed.pkl
 !models/.gitkeep
 
 # Logs
@@ -65,6 +67,7 @@ logs/
 
 # Divers
 *.csv
+!output/hellowork_cleaned_complete.csv
 *.xlsx
 *.zip
 *.tar.gz

@@ -9,7 +9,6 @@ Cette page permet de :
 - Projeter sa progression salariale (3 scénarios)
 - Simuler une négociation salariale
 
-FIX: Ajout de clés uniques pour éviter l'erreur removeChild
 
 Architecture:
     - Module principal : Orchestration et formulaire
@@ -17,6 +16,7 @@ Architecture:
     - career_roadmap : Roadmap pédagogique et matrice effort/impact
     - career_transitions : Transitions et projections
     - career_export : Négociation, export et navigation
+
 """
 
 import streamlit as st
@@ -182,12 +182,11 @@ def render_profile_form() -> Optional[Dict[str, Any]]:
         
         st.markdown("---")
         
-        # FIX: Ajout d'une clé unique au bouton submit
+        # FIX: form_submit_button n'accepte PAS de paramètre key
         submitted = st.form_submit_button(
             "🚀 Générer ma feuille de route",
             type="primary",
-            use_container_width=True,
-            key="career_submit_btn"
+            use_container_width=True
         )
         
         if submitted:
