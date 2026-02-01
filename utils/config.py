@@ -8,8 +8,6 @@ Ce module centralise :
 - Les multiplicateurs salariaux calculés dynamiquement
 - Les métriques du modèle XGBoost
 - La configuration de l'interface Streamlit
-
-
 """
 
 import streamlit as st
@@ -26,43 +24,17 @@ from typing import Dict, Tuple, Optional, Any
 class Config:
     """
     Configuration centralisée de l'application avec calculs dynamiques.
-    
-    Cette classe gère :
-    - Les chemins des fichiers (modèle, données, rapports)
-    - Les énumérations statiques (villes, métiers, secteurs)
-    - Les multiplicateurs salariaux calculés depuis le dataset
-    - Les métriques de performance du modèle
-    - Le cache des valeurs dynamiques
-    
-    Attributes:
-        BASE_DIR (Path): Répertoire racine de l'application
-        MODEL_PATH (Path): Chemin vers le modèle XGBoost
-        DATA_PATH (Path): Chemin vers le dataset nettoyé
-        REPORT_PATH (Path): Chemin vers le rapport de modélisation
-        MODEL_INFO (dict): Métriques de performance du modèle
-        MARKET_MEDIAN (float): Salaire médian du marché Data
-        
-    Examples:
-        >>> config = Config()
-        >>> multiplier = config.get_city_multiplier("Paris")
-        >>> print(f"Multiplicateur Paris: {multiplier}")
-        Multiplicateur Paris: 1.20
-        
-        >>> salary_range = config.get_salary_range_by_job("Data Scientist")
-        >>> print(f"Fourchette: {salary_range}")
-        Fourchette: (40000, 65000)
     """
     
     # ========================================================================
-    # CHEMINS DES FICHIERS
+    # CHEMINS DES FICHIERS - CORRIGÉS SELON DEBUG
     # ========================================================================
     
-    BASE_DIR = Path(__file__).parent.parent  # FIX: Chemin dynamique
+    BASE_DIR = Path(__file__).parent.parent  # Dynamique : /mount/src/projet_machine_learning
     MODEL_PATH = BASE_DIR / "models" / "best_model_XGBoost_fixed.pkl"
-    DATA_PATH = BASE_DIR / "data" / "hellowork_cleaned_complete.csv"
-    TEST_DATA_PATH = BASE_DIR / "models" / "test_data.pkl"
-    REPORT_PATH = BASE_DIR / "models" / "modeling_report_v7.json"
-    
+    DATA_PATH = BASE_DIR / "output" / "hellowork_cleaned_complete.csv"  # FIX: Chemin réel
+    TEST_DATA_PATH = BASE_DIR / "output" / "test_data.pkl"  # FIX: Chemin réel
+    REPORT_PATH = BASE_DIR / "output" / "analysis_complete" / "modeling_v7_improved" / "modeling_report_v7.json"
     
     # ========================================================================
     # BRANDING
@@ -111,106 +83,33 @@ class Config:
     # ========================================================================
     
     CITIES = [
-        "Paris",
-        "Lyon",
-        "Marseille",
-        "Toulouse",
-        "Bordeaux",
-        "Lille",
-        "Nantes",
-        "Nice",
-        "Rennes",
-        "Strasbourg",
-        "Montpellier",
-        "Grenoble",
-        "Reims",
-        "Saint-Étienne",
-        "Toulon",
-        "Autre",
-        "Non spécifié"
+        "Paris", "Lyon", "Marseille", "Toulouse", "Bordeaux",
+        "Lille", "Nantes", "Nice", "Rennes", "Strasbourg",
+        "Montpellier", "Grenoble", "Reims", "Saint-Étienne",
+        "Toulon", "Autre", "Non spécifié"
     ]
     
     SECTORS = [
-        "Tech",
-        "Banque",
-        "Finance",
-        "Startup",
-        "Conseil",
-        "Assurance",
-        "ESN",
-        "E-commerce",
-        "Industrie",
-        "Santé",
-        "Retail",
-        "Autre",
-        "Non spécifié"
+        "Tech", "Banque", "Finance", "Startup", "Conseil",
+        "Assurance", "ESN", "E-commerce", "Industrie", "Santé",
+        "Retail", "Autre", "Non spécifié"
     ]
     
-    CONTRACT_TYPES = [
-        "CDI",
-        "CDD",
-        "Stage",
-        "Alternance"
-    ]
+    CONTRACT_TYPES = ["CDI", "CDD", "Stage", "Alternance"]
     
     # ========================================================================
     # COMPÉTENCES TECHNIQUES
     # ========================================================================
     
-    LANGUAGES = [
-        "Python",
-        "R",
-        "SQL",
-        "Java",
-        "Scala",
-        "PySpark"
-    ]
-    
-    VIZ_TOOLS = [
-        "Tableau",
-        "Power BI",
-        "Qlik",
-        "Looker",
-        "Superset"
-    ]
-    
-    CLOUD = [
-        "AWS",
-        "Azure",
-        "GCP",
-        "Google Cloud",
-        "Snowflake",
-        "Databricks"
-    ]
-    
-    BIG_DATA = [
-        "Spark",
-        "Hadoop",
-        "Kafka",
-        "Airflow",
-        "Dbt",
-        "Presto"
-    ]
-    
+    LANGUAGES = ["Python", "R", "SQL", "Java", "Scala", "PySpark"]
+    VIZ_TOOLS = ["Tableau", "Power BI", "Qlik", "Looker", "Superset"]
+    CLOUD = ["AWS", "Azure", "GCP", "Google Cloud", "Snowflake", "Databricks"]
+    BIG_DATA = ["Spark", "Hadoop", "Kafka", "Airflow", "Dbt", "Presto"]
     ML_TOOLS = [
-        "Machine Learning",
-        "Deep Learning",
-        "TensorFlow",
-        "PyTorch",
-        "Scikit-learn",
-        "MLflow",
-        "NLP",
-        "Computer Vision"
+        "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch",
+        "Scikit-learn", "MLflow", "NLP", "Computer Vision"
     ]
-    
-    OTHER_TECH = [
-        "Git",
-        "Docker",
-        "Kubernetes",
-        "CI/CD",
-        "Jenkins",
-        "Terraform"
-    ]
+    OTHER_TECH = ["Git", "Docker", "Kubernetes", "CI/CD", "Jenkins", "Terraform"]
     
     # ========================================================================
     # MÉTRIQUES DU MODÈLE
@@ -233,14 +132,6 @@ class Config:
     MARKET_MEAN = 48914
     MARKET_STD = 13056
     
-    TOP_FEATURES = [
-        "Paris (localisation)",
-        "Secteur Banque",
-        "Expérience d'entreprise non spécifiée",
-        "Secteur à haut salaire",
-        "Toulouse (localisation)"
-    ]
-    
     # ========================================================================
     # CACHE POUR DONNÉES DYNAMIQUES
     # ========================================================================
@@ -252,26 +143,11 @@ class Config:
     # ========================================================================
     
     def __init__(self):
-        """
-        Initialise la configuration et charge les données du rapport.
-        
-        Tente de charger les métriques réelles depuis le rapport de
-        modélisation. En cas d'échec, utilise les valeurs par défaut.
-        """
+        """Initialise la configuration et charge les données du rapport."""
         self._load_config_from_report()
     
     def _load_config_from_report(self) -> None:
-        """
-        Charge la configuration depuis le rapport de modélisation JSON.
-        
-        Met à jour :
-        - Les métriques de performance (R², MAE, RMSE)
-        - Les statistiques du marché (médiane, moyenne, écart-type)
-        - Le nom du meilleur modèle
-        
-        En cas d'erreur, conserve les valeurs par défaut et affiche un
-        avertissement dans la sidebar.
-        """
+        """Charge la configuration depuis le rapport de modélisation JSON."""
         try:
             if not self.REPORT_PATH.exists():
                 st.sidebar.info("ℹ️ Rapport non trouvé - Valeurs par défaut utilisées")
@@ -280,9 +156,7 @@ class Config:
             with open(self.REPORT_PATH, 'r', encoding='utf-8') as f:
                 report = json.load(f)
             
-            # Extraction des métriques de performance
             perf_metrics = report.get('performance_metrics', {})
-            
             Config.MODEL_INFO.update({
                 'r2_score': perf_metrics.get('test_r2', 0.337),
                 'mae': perf_metrics.get('test_mae', 5163),
@@ -293,7 +167,6 @@ class Config:
                 'overfitting_score': perf_metrics.get('overfitting_score', 0.140)
             })
             
-            # Extraction des statistiques du marché
             data_info = report.get('data_info', {})
             Config.MARKET_MEDIAN = data_info.get('target_median', 49450)
             Config.MARKET_MEAN = data_info.get('target_mean', 48914)
@@ -302,10 +175,7 @@ class Config:
             st.sidebar.success("✅ Configuration chargée depuis le rapport")
             
         except Exception as e:
-            st.sidebar.warning(
-                f"⚠️ Erreur chargement rapport : {str(e)[:80]}...\n"
-                "Utilisation des valeurs par défaut."
-            )
+            st.sidebar.warning(f"⚠️ Erreur chargement rapport : {str(e)[:80]}...")
     
     # ========================================================================
     # CHARGEMENT DES DONNÉES DYNAMIQUES
@@ -313,40 +183,17 @@ class Config:
     
     @classmethod
     def _ensure_dynamic_loaded(cls) -> None:
-        """
-        Charge toutes les valeurs dynamiques une seule fois (lazy loading).
-        
-        Calcule depuis le dataset :
-        - Multiplicateurs salariaux par ville (médiane_ville / médiane_globale)
-        - Multiplicateurs salariaux par secteur (médiane_secteur / médiane_globale)
-        - Fourchettes salariales par type de poste (P25-P75)
-        - Fourchettes salariales par niveau d'expérience (P25-P75)
-        
-        Les résultats sont mis en cache dans cls._dynamic_cache.
-        En cas d'erreur, utilise des valeurs par défaut raisonnables.
-        
-        Notes:
-            Cette méthode est thread-safe grâce au cache classe.
-            Elle n'est exécutée qu'une seule fois par session.
-        """
+        """Charge toutes les valeurs dynamiques une seule fois (lazy loading)."""
         if cls._dynamic_cache:
-            return  # Déjà chargé
+            return
         
         try:
-            # Chargement du dataset
             df = pd.read_csv(
                 cls.DATA_PATH,
-                usecols=[
-                    'location_final',
-                    'sector_clean',
-                    'salary_mid',
-                    'job_type_with_desc',
-                    'experience_final'
-                ],
+                usecols=['location_final', 'sector_clean', 'salary_mid', 'job_type_with_desc', 'experience_final'],
                 encoding='utf-8'
             )
             
-            # Nettoyage des données salariales
             df['salary_mid'] = pd.to_numeric(df['salary_mid'], errors='coerce')
             df = df.dropna(subset=['salary_mid'])
             
@@ -355,36 +202,23 @@ class Config:
             
             global_median = df['salary_mid'].median()
             
-            # Calcul des multiplicateurs de villes
             city_medians = df.groupby('location_final')['salary_mid'].median()
             city_multipliers = (city_medians / global_median).to_dict()
             
-            # Calcul des multiplicateurs de secteurs
             sector_medians = df.groupby('sector_clean')['salary_mid'].median()
             sector_multipliers = (sector_medians / global_median).to_dict()
             
-            # Calcul des fourchettes par type de poste (P25-P75)
             job_ranges = {}
             for job in df['job_type_with_desc'].unique():
                 job_salaries = df[df['job_type_with_desc'] == job]['salary_mid']
-                
-                if len(job_salaries) >= 10:  # Minimum 10 observations
+                if len(job_salaries) >= 10:
                     job_ranges[job] = (
                         int(job_salaries.quantile(0.25)),
                         int(job_salaries.quantile(0.75))
                     )
             
-            # Calcul des fourchettes par expérience (P25-P75)
             exp_ranges = {}
-            exp_bins = [
-                (0, 1),    # Débutant
-                (1, 3),    # Junior
-                (3, 5),    # Confirmé
-                (5, 8),    # Senior
-                (8, 12),   # Expert
-                (12, 30)   # Lead/Directeur
-            ]
-            
+            exp_bins = [(0, 1), (1, 3), (3, 5), (5, 8), (8, 12), (12, 30)]
             for min_exp, max_exp in exp_bins:
                 exp_salaries = df[
                     (df['experience_final'] >= min_exp) &
@@ -397,7 +231,6 @@ class Config:
                         int(exp_salaries.quantile(0.75))
                     )
             
-            # Stockage dans le cache
             cls._dynamic_cache = {
                 'city_multipliers': city_multipliers,
                 'sector_multipliers': sector_multipliers,
@@ -407,62 +240,29 @@ class Config:
                 'n_samples': len(df)
             }
             
-            st.success(
-                f"✅ Multiplicateurs calculés depuis {len(df):,} offres"
-            )
+            st.success(f"✅ Multiplicateurs calculés depuis {len(df):,} offres")
             
         except Exception as e:
-            # Fallback sur valeurs par défaut
-            st.warning(
-                f"⚠️ Calcul dynamique échoué : {str(e)[:80]}...\n"
-                "Utilisation des valeurs par défaut."
-            )
-            
+            st.warning(f"⚠️ Calcul dynamique échoué : {str(e)[:80]}...")
             cls._dynamic_cache = cls._get_default_multipliers()
     
     @staticmethod
     def _get_default_multipliers() -> Dict[str, Any]:
-        """
-        Retourne les multiplicateurs et fourchettes par défaut.
-        
-        Utilisé en fallback si le calcul dynamique échoue.
-        
-        Returns:
-            Dict contenant les multiplicateurs et fourchettes par défaut
-        """
+        """Retourne les multiplicateurs par défaut."""
         return {
             'city_multipliers': {
-                "Paris": 1.20,
-                "Lyon": 1.10,
-                "Marseille": 1.05,
-                "Toulouse": 1.00,
-                "Bordeaux": 1.00,
-                "Lille": 0.95,
-                "Nantes": 0.95,
-                "Nice": 1.05,
-                "Rennes": 0.95,
-                "Strasbourg": 0.95,
-                "Montpellier": 0.95,
-                "Grenoble": 0.95,
-                "Reims": 0.90,
-                "Saint-Étienne": 0.90,
-                "Toulon": 0.90,
-                "Non spécifié": 1.00,
-                "Autre": 1.00
+                "Paris": 1.20, "Lyon": 1.10, "Marseille": 1.05,
+                "Toulouse": 1.00, "Bordeaux": 1.00, "Lille": 0.95,
+                "Nantes": 0.95, "Nice": 1.05, "Rennes": 0.95,
+                "Strasbourg": 0.95, "Montpellier": 0.95, "Grenoble": 0.95,
+                "Reims": 0.90, "Saint-Étienne": 0.90, "Toulon": 0.90,
+                "Non spécifié": 1.00, "Autre": 1.00
             },
             'sector_multipliers': {
-                "Banque": 1.25,
-                "Finance": 1.20,
-                "Tech": 1.15,
-                "Startup": 1.15,
-                "Conseil": 1.10,
-                "Assurance": 1.10,
-                "ESN": 1.05,
-                "E-commerce": 1.00,
-                "Industrie": 0.95,
-                "Santé": 0.95,
-                "Retail": 0.90,
-                "Non spécifié": 1.00,
+                "Banque": 1.25, "Finance": 1.20, "Tech": 1.15,
+                "Startup": 1.15, "Conseil": 1.10, "Assurance": 1.10,
+                "ESN": 1.05, "E-commerce": 1.00, "Industrie": 0.95,
+                "Santé": 0.95, "Retail": 0.90, "Non spécifié": 1.00,
                 "Autre": 1.00
             },
             'job_ranges': {
@@ -473,154 +273,61 @@ class Config:
                 "Spécialiste IA/ML": (45000, 75000)
             },
             'exp_ranges': {
-                (0, 1): (30000, 45000),
-                (1, 3): (35000, 50000),
-                (3, 5): (40000, 55000),
-                (5, 8): (45000, 65000),
-                (8, 12): (50000, 75000),
-                (12, 30): (60000, 90000)
+                (0, 1): (30000, 45000), (1, 3): (35000, 50000),
+                (3, 5): (40000, 55000), (5, 8): (45000, 65000),
+                (8, 12): (50000, 75000), (12, 30): (60000, 90000)
             },
             'loaded': False,
             'n_samples': 0
         }
     
     # ========================================================================
-    # ACCESSEURS PUBLICS (API)
+    # ACCESSEURS PUBLICS
     # ========================================================================
     
     @classmethod
     def get_city_multiplier(cls, city: str) -> float:
-        """
-        Retourne le multiplicateur salarial pour une ville donnée.
-        
-        Le multiplicateur est calculé comme :
-        médiane_salaire_ville / médiane_salaire_globale
-        
-        Args:
-            city: Nom de la ville
-            
-        Returns:
-            Multiplicateur (ex: 1.20 pour Paris = +20%)
-            
-        Examples:
-            >>> Config.get_city_multiplier("Paris")
-            1.20
-            >>> Config.get_city_multiplier("Lille")
-            0.95
-        """
+        """Retourne le multiplicateur salarial pour une ville donnée."""
         cls._ensure_dynamic_loaded()
         return cls._dynamic_cache['city_multipliers'].get(city, 1.0)
     
     @classmethod
     def get_sector_multiplier(cls, sector: str) -> float:
-        """
-        Retourne le multiplicateur salarial pour un secteur donné.
-        
-        Le multiplicateur est calculé comme :
-        médiane_salaire_secteur / médiane_salaire_globale
-        
-        Args:
-            sector: Nom du secteur
-            
-        Returns:
-            Multiplicateur (ex: 1.25 pour Banque = +25%)
-            
-        Examples:
-            >>> Config.get_sector_multiplier("Banque")
-            1.25
-            >>> Config.get_sector_multiplier("Retail")
-            0.90
-        """
+        """Retourne le multiplicateur salarial pour un secteur donné."""
         cls._ensure_dynamic_loaded()
         return cls._dynamic_cache['sector_multipliers'].get(sector, 1.0)
     
     @classmethod
     def get_salary_range_by_job(cls, job_type: str) -> Tuple[int, int]:
-        """
-        Retourne la fourchette salariale (P25-P75) pour un type de poste.
-        
-        Args:
-            job_type: Type de poste (ex: "Data Scientist")
-            
-        Returns:
-            Tuple (salaire_bas, salaire_haut) en euros annuels bruts
-            
-        Examples:
-            >>> Config.get_salary_range_by_job("Data Scientist")
-            (40000, 65000)
-        """
+        """Retourne la fourchette salariale (P25-P75) pour un type de poste."""
         cls._ensure_dynamic_loaded()
-        job_ranges = cls._dynamic_cache['job_ranges']
-        return job_ranges.get(job_type, (35000, 60000))
+        return cls._dynamic_cache['job_ranges'].get(job_type, (35000, 60000))
     
     @classmethod
-    def get_salary_range_by_experience(
-        cls,
-        experience_years: float
-    ) -> Tuple[int, int]:
-        """
-        Retourne la fourchette salariale selon le niveau d'expérience.
-        
-        Args:
-            experience_years: Nombre d'années d'expérience
-            
-        Returns:
-            Tuple (salaire_bas, salaire_haut) en euros annuels bruts
-            
-        Examples:
-            >>> Config.get_salary_range_by_experience(4)
-            (40000, 55000)
-            >>> Config.get_salary_range_by_experience(10)
-            (50000, 75000)
-        """
+    def get_salary_range_by_experience(cls, experience_years: float) -> Tuple[int, int]:
+        """Retourne la fourchette salariale selon le niveau d'expérience."""
         cls._ensure_dynamic_loaded()
         exp_ranges = cls._dynamic_cache['exp_ranges']
-        
-        # Trouver la bonne tranche d'expérience
         for (min_exp, max_exp), salary_range in exp_ranges.items():
             if min_exp <= experience_years < max_exp:
                 return salary_range
-        
-        # Fallback pour expérience très élevée (>12 ans)
         return exp_ranges.get((12, 30), (60000, 90000))
     
     @classmethod
     def get_all_city_multipliers(cls) -> Dict[str, float]:
-        """
-        Retourne tous les multiplicateurs de villes.
-        
-        Utile pour affichage, debug ou analyse comparative.
-        
-        Returns:
-            Dict {ville: multiplicateur}
-        """
+        """Retourne tous les multiplicateurs de villes."""
         cls._ensure_dynamic_loaded()
         return cls._dynamic_cache['city_multipliers']
     
     @classmethod
     def get_all_sector_multipliers(cls) -> Dict[str, float]:
-        """
-        Retourne tous les multiplicateurs de secteurs.
-        
-        Utile pour affichage, debug ou analyse comparative.
-        
-        Returns:
-            Dict {secteur: multiplicateur}
-        """
+        """Retourne tous les multiplicateurs de secteurs."""
         cls._ensure_dynamic_loaded()
         return cls._dynamic_cache['sector_multipliers']
     
     @classmethod
     def reload_dynamic_data(cls) -> None:
-        """
-        Force le rechargement de toutes les données dynamiques.
-        
-        Utile si le dataset a été modifié et qu'on veut recalculer
-        les multiplicateurs sans redémarrer l'application.
-        
-        Warning:
-            Cette opération peut prendre quelques secondes.
-        """
+        """Force le rechargement de toutes les données dynamiques."""
         cls._dynamic_cache = {}
         cls._ensure_dynamic_loaded()
         st.success("🔄 Données dynamiques rechargées")
@@ -631,20 +338,7 @@ class Config:
 # ============================================================================
 
 def init_session_state() -> None:
-    """
-    Initialise les variables de session Streamlit.
-    
-    Crée les variables suivantes si elles n'existent pas :
-    - model_loaded : Indicateur de chargement du modèle
-    - current_profile : Profil utilisateur par défaut
-    - prediction_made : Flag de prédiction effectuée
-    - last_prediction : Dernière prédiction réalisée
-    - model_metrics : Métriques du modèle
-    
-    Notes:
-        Cette fonction doit être appelée au début de chaque page.
-        Les valeurs ne sont initialisées qu'une seule fois par session.
-    """
+    """Initialise les variables de session Streamlit."""
     if 'model_loaded' not in st.session_state:
         st.session_state.model_loaded = False
     
@@ -682,132 +376,65 @@ def init_session_state() -> None:
 # ============================================================================
 
 def setup_page(title: Optional[str] = None, icon: str = "💼") -> None:
-    """
-    Configure la page Streamlit avec header personnalisé et style CSS.
-    
-    Args:
-        title: Titre de la page (défaut: Config.APP_TITLE)
-        icon: Icône de la page (défaut: "💼")
-    
-    Notes:
-        Cette fonction doit être appelée en premier dans chaque page.
-        Elle configure :
-        - Les métadonnées de la page
-        - Le CSS personnalisé
-        - Le header avec gradient
-    """
+    """Configure la page Streamlit avec header personnalisé."""
     if title is None:
         title = Config.APP_TITLE
     
-    # Configuration de base
     st.set_page_config(
         page_title=title,
         page_icon=icon,
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'Get Help': 'https://github.com/your-repo',
-            'Report a bug': 'https://github.com/your-repo/issues',
+            'Get Help': 'https://github.com/Paguy-Stream/Projet_machine_learning',
+            'Report a bug': 'https://github.com/Paguy-Stream/Projet_machine_learning/issues',
             'About': f"""
             ## {Config.APP_TITLE}
             
-            Application d'estimation salariale basée sur l'analyse de 
-            **5 868 offres d'emploi** du dataset HelloWork.
+            Application d'estimation salariale basée sur **5 868 offres**.
             
             **Modèle** : {Config.MODEL_INFO['model_name']}
             **R²** : {Config.MODEL_INFO['r2_score']:.3f}
             **MAE** : {Config.MODEL_INFO['mae']:,}€
             **Précision** : {Config.MODEL_INFO['precision_15']:.0f}% (±15%)
-            
-            ✅ Multiplicateurs calculés dynamiquement
-            ✅ Fourchettes salariales auto-ajustées
-            
-            Données collectées en janvier 2026.
             """
         }
     )
     
-    # CSS personnalisé
     _apply_custom_css()
-    
-    # Header unique et optimisé
     _render_page_header(title)
 
 
 def _apply_custom_css() -> None:
-    """
-    Applique les styles CSS personnalisés à l'application.
-    
-    Styles appliqués :
-    - Boutons avec gradient et effets hover
-    - Cartes de métriques avec ombres
-    - Sidebar avec fond dégradé
-    - Badges colorés
-    - Alertes personnalisées
-    """
+    """Applique les styles CSS personnalisés."""
     st.markdown("""
     <style>
-    /* Boutons principaux */
     .stButton>button {
         background: linear-gradient(135deg, #1f77b4 0%, #0d5a9e 100%);
         color: white;
-        border: none;
-        padding: 12px 24px;
         border-radius: 8px;
         font-weight: 600;
-        font-size: 16px;
         width: 100%;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #0d5a9e 0%, #1f77b4 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    
-    /* Cartes de métriques */
     [data-testid="stMetricValue"] {
         font-size: 28px;
-        font-weight: 700;
         color: #1f77b4;
     }
     
-    /* Sidebar */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
     }
     
-    /* Suppression du padding supérieur excessif */
     .block-container {
         padding-top: 2rem;
-    }
-    
-    /* Espacement des sections */
-    hr {
-        margin: 2rem 0;
-        border: none;
-        border-top: 2px solid #e9ecef;
-    }
-    
-    /* Amélioration des expanders */
-    .streamlit-expanderHeader {
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        font-weight: 600;
     }
     </style>
     """, unsafe_allow_html=True)
 
 
 def _render_page_header(title: str) -> None:
-    """
-    Affiche le header principal de la page avec gradient.
-    
-    Args:
-        title: Titre à afficher dans le header
-    """
+    """Affiche le header principal de la page."""
     st.markdown(f"""
     <div style='
         text-align: center;
@@ -815,32 +442,14 @@ def _render_page_header(title: str) -> None:
         background: linear-gradient(135deg, #1f77b4 0%, #0d5a9e 100%);
         border-radius: 12px;
         margin-bottom: 30px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     '>
-        <h1 style='
-            color: white;
-            font-size: 36px;
-            margin: 0 0 8px 0;
-            font-weight: 700;
-        '>
-            💼 {title}
-        </h1>
-        <p style='
-            color: rgba(255,255,255,0.95);
-            font-size: 16px;
-            margin: 5px 0;
-            font-weight: 500;
-        '>
-            5 868 offres HelloWork • XGBoost v7 • R² = {Config.MODEL_INFO['r2_score']:.3f}
+        <h1 style='color: white; font-size: 36px; margin: 0;'>💼 {title}</h1>
+        <p style='color: rgba(255,255,255,0.95); margin: 8px 0;'>
+            5 868 offres • XGBoost v7 • R² = {Config.MODEL_INFO['r2_score']:.3f}
         </p>
-        <p style='
-            color: rgba(255,255,255,0.85);
-            font-size: 14px;
-            margin: 8px 0 0 0;
-        '>
+        <p style='color: rgba(255,255,255,0.85); font-size: 14px; margin: 0;'>
             ✅ MAE = {Config.MODEL_INFO['mae']:,}€ • 
-            ✅ Précision {Config.MODEL_INFO['precision_15']:.0f}% (±15%) • 
-            ✅ Calculs dynamiques
+            ✅ Précision {Config.MODEL_INFO['precision_15']:.0f}% (±15%)
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -853,5 +462,18 @@ def _render_page_header(title: str) -> None:
 __all__ = [
     'Config',
     'init_session_state',
-    'setup_page'
+    'setup_page',
+    # FIX: Export des chemins pour debug
+    'BASE_DIR',
+    'DATA_PATH',
+    'MODEL_PATH',
+    'TEST_DATA_PATH',
+    'REPORT_PATH'
 ]
+
+# Exports de niveau module pour compatibilité
+BASE_DIR = Config.BASE_DIR
+DATA_PATH = Config.DATA_PATH
+MODEL_PATH = Config.MODEL_PATH
+TEST_DATA_PATH = Config.TEST_DATA_PATH
+REPORT_PATH = Config.REPORT_PATH
