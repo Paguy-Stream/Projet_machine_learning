@@ -19,6 +19,15 @@ from typing import Dict, Optional, Tuple
 from utils.config import Config, init_session_state, setup_page
 from utils.model_utils import init_model_utils
 
+import os
+
+st.write("### 🔍 Debug chemins Streamlit Cloud")
+st.write("**Répertoire courant (cwd)** :", os.getcwd())
+st.write("**Fichier actuel (__file__)** :", __file__)
+st.write("**Path.cwd()** :", Path.cwd())
+st.write("**Path(__file__).resolve()** :", Path(__file__).resolve())
+st.write("**Contenu du dossier courant** :", os.listdir(os.getcwd()))
+
 
 # ============================================================================
 # CONFIGURATION INITIALE
