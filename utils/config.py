@@ -57,12 +57,11 @@ class Config:
     # CHEMINS DES FICHIERS
     # ========================================================================
     
-    BASE_DIR = Path.cwd()
+    BASE_DIR = Path(__file__).parent.parent  # FIX: Chemin dynamique
     MODEL_PATH = BASE_DIR / "models" / "best_model_XGBoost_fixed.pkl"
-    DATA_PATH = BASE_DIR / "output" / "hellowork_cleaned_complete.csv"
-    REPORT_PATH = (
-        BASE_DIR / "output" / "analysis_complete" / 
-        "modeling_v7_improved" / "modeling_report_v7.json"
+    DATA_PATH = BASE_DIR / "data" / "hellowork_cleaned_complete.csv"
+    TEST_DATA_PATH = BASE_DIR / "models" / "test_data.pkl"
+    REPORT_PATH = BASE_DIR / "models" / "modeling_report_v7.json"
     )
     
     # ========================================================================
