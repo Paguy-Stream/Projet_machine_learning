@@ -21,6 +21,7 @@ from utils.model_utils import init_model_utils
 
 import os
 
+setup_page() 
 st.write("### 🔍 Debug chemins Streamlit Cloud")
 st.write("**Répertoire courant (cwd)** :", os.getcwd())
 st.write("**Fichier actuel (__file__)** :", __file__)
