@@ -33,3 +33,4 @@ joblib==1.3.2
 
 # Required for Plotly LOWESS trendline
 statsmodels==0.14.1
+rich==13.7.1
