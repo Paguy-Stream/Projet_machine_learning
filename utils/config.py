@@ -62,7 +62,7 @@ class Config:
     DATA_PATH = BASE_DIR / "data" / "hellowork_cleaned_complete.csv"
     TEST_DATA_PATH = BASE_DIR / "models" / "test_data.pkl"
     REPORT_PATH = BASE_DIR / "models" / "modeling_report_v7.json"
-    )
+    
     
     # ========================================================================
     # BRANDING
