@@ -7,7 +7,10 @@
 [![Coverage](https://img.shields.io/badge/Coverage-70%25-yellow.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> **Application Streamlit interactive** pour prédire et analyser les salaires des métiers de la Data en France, basée sur un modèle XGBoost entraîné sur 5,868 offres d'emploi réelles.
+> Ce projet analyse 5 868 offres d’emploi Data collectées sur HelloWork en janvier 2026, afin d’estimer le salaire annuel brut à partir de 29 variables explicatives. Le modèle XGBoost retenu atteint un R² de 0.337 et une erreur absolue moyenne de 5 163 €. 
+
+Accéder à l’application en ligne:
+🔗 Application Streamlit : https://projetmachinelearning.streamlit.app/
 
 ![Page d'accueil](images/gift_acceuil.gif)
 
@@ -30,32 +33,36 @@
 
 ---
 
-## 🎯 Description du projet
+##  Description du projet
 
 Ce projet vise à **prédire les salaires** des métiers de la Data en France en exploitant des données  d'offres d'emploi non structurées. À travers une application web interactive développée avec **Streamlit**, il offre trois fonctionnalités principales :
 
-1. **🔮 Prédiction de salaire** - Estimation personnalisée basée sur votre profil
-2. **📊 Analyse de marché** - Vue d'ensemble du marché de l'emploi Data
-3. **🎓 Conseil carrière** - Roadmap de compétences et transitions professionnelles
+1. ** Prédiction de salaire** - Estimation salariale pour un profil donné,
+2. ** Analyse de marché** - Vue d'ensemble des tendances observées dans les données,
+3. ** Conseil carrière** - simulation de l’impact de certains choix professionnels.
+
+Les résultats reflètent les tendances présentes dans le dataset. Le modèle a un R² de 0.337 et une erreur absolue moyenne de 5 163 €. Ces limites sont affichées pour contextualiser les estimations proposées.
+
+> Ce modèle ne prétend pas déterminer la "valeur" d’un candidat, mais reflète les tendances observées dans un corpus spécifique d’offres d’emploi. Il ne doit pas être utilisé comme unique référence pour des décisions de recrutement ou de négociation salariale.
 
 ### Question centrale de recherche
 
-> **« Comment construire un modèle de régression capable de prédire la fourchette salariale à partir de features hétérogènes (texte, catégories, géographie) extraites d'annonces non structurées ? »**
+> **Quels facteurs observables dans les offres d’emploi expliquent la variance des salaires dans le domaine Data en France ?**
 
 ---
 
-## 🌍 Contexte et problématique
+##  Contexte et problématique
 
-Le marché de l'emploi dans la Data se distingue par une **évolution extrêmement rapide des technologies** et une **transformation profonde des métiers**. Aujourd'hui, un profil "Data" ne se définit plus uniquement par son intitulé de poste ou son parcours académique, mais par une **combinaison précise de compétences techniques**, allant de la maîtrise de langages de programmation aux environnements Cloud.
+Le marché de l'emploi dans la Data se distingue par une **évolution rapide des technologies** et une **transformation profonde des métiers**. Aujourd'hui, un profil "Data" ne se définit plus uniquement par son intitulé de poste ou son parcours académique, mais par une **combinaison précise de compétences techniques**, allant de la maîtrise de langages de programmation aux environnements Cloud.
 
 ### Défis identifiés
 
 Cette complexité structurelle crée un marché de l'emploi très actif où :
 
-- ⚡ **Les références de rémunération fluctuent en permanence**
-- 🎯 **L'orientation professionnelle devient complexe** pour les futurs diplômés
-- 📊 **Les informations sont dispersées** dans des milliers d'annonces hétérogènes
-- 🔍 **L'évaluation de sa propre valeur sur le marché** est particulièrement délicate
+-  **Les références de rémunération fluctuent en permanence**
+-  **L'orientation professionnelle devient complexe** pour les futurs diplômés
+-  **Les informations sont dispersées** dans des milliers d'annonces hétérogènes
+-  **L'évaluation de sa propre valeur sur le marché** est particulièrement délicate
 
 ### Nécessité du projet
 
@@ -67,25 +74,25 @@ Dans ce contexte de **forte volatilité**, il existe une difficulté réelle à 
 
 ---
 
-## 🎯 Démarche et objectifs
+##  Démarche et objectifs
 
 ### Objectifs de l'étude
 
 Ce travail est structuré autour des axes suivants :
 
-1. **✅ Vérifier la capacité de prédiction**
+1. ** Vérifier la capacité de prédiction**
    - Tester si l'extraction de variables techniques permet de faire converger un modèle vers une estimation salariale cohérente
 
-2. **📊 Analyser la hiérarchie des signaux**
+2. ** Analyser la hiérarchie des signaux**
    - Mesurer le poids relatif de l'expertise technique face aux déterminants géographiques traditionnels
 
-3. **🔗 Étudier les synergies entre compétences**
+3. ** Étudier les synergies entre compétences**
    - Identifier les combinaisons créant des sauts de valeur non-linéaires
 
-4. **🗺️ Cartographier la distribution des opportunités**
+4. ** Cartographier la distribution des opportunités**
    - À partir de données extraites de HelloWork.com
 
-5. **🎓 Fournir des indicateurs concrets**
+5. ** Fournir des indicateurs concrets**
    - Pour l'orientation et l'évaluation de profil des futurs candidats
 
 ### Périmètre de l'étude
@@ -109,7 +116,7 @@ L'analyse porte sur un échantillon de **5,868 offres d'emploi** collectées via
 
 ---
 
-## 🔬 Méthodologie
+##  Méthodologie
 
 ### 1. Web Scraping
 
@@ -132,11 +139,11 @@ L'analyse porte sur un échantillon de **5,868 offres d'emploi** collectées via
 ### 2. Nettoyage et Feature Engineering
 
 **Pipeline de traitement** :
-- ✅ Nettoyage des descriptions (suppression de headers/footers)
-- ✅ Extraction d'expérience (patterns regex + correction des valeurs extrêmes)
-- ✅ Parsing de compétences (12+ technologies détectées)
-- ✅ Normalisation des salaires (support k€ et €)
-- ✅ Création de 45+ features dérivées
+-  Nettoyage des descriptions 
+-  Extraction d'expérience (patterns regex + correction des valeurs extrêmes)
+-  Parsing de compétences (12+ technologies détectées)
+-  Normalisation des salaires (support k€ et €)
+- Création de 101 colonnes au total, dont 29 utilisées comme features d’entrée
 
 **Architecture** :
 ```python
@@ -159,12 +166,12 @@ DescriptionCleaner      # Nettoyage de texte
 1. Ridge / Lasso / ElasticNet (régularisation L1/L2)
 2. Random Forest (min_samples_leaf=20)
 3. Gradient Boosting (subsample=0.8)
-4. **XGBoost** ⭐ (modèle retenu)
+4. **XGBoost**  (modèle retenu)
 5. LightGBM (feature_fraction=0.7)
 
 ---
 
-## 🏆 Résultats du Machine Learning
+##  Résultats du Machine Learning
 
 ### Modèle retenu : XGBoost
 
@@ -216,13 +223,16 @@ DescriptionCleaner      # Nettoyage de texte
 
 ---
 
-## 📱 Utilisation de l'application
+##  Utilisation de l'application
 
 ### Page d'accueil
 
+> _« Synthèse des tendances observées dans les 5 868 offres analysées, avec métriques du modèle et navigation vers les fonctionnalités principales. »_
+
 ![Accueil](images/gift_acceuil.gif)
 
-**Fonctionnalités** :
+**Fonctionnalités** : 
+
 - 📊 Vue d'ensemble du marché (4,253 postes Data analysés)
 - 💰 Salaire médian par type de poste
 - 🔥 Top compétences les plus demandées
@@ -232,9 +242,12 @@ DescriptionCleaner      # Nettoyage de texte
 
 ### 1. 🔮 Module Prédiction
 
+> _«Estimation salariale basée sur le modèle XGBoost, accompagnée d’une fourchette réaliste (±7 417 €) et d’un positionnement par rapport au marché réel.»_
+
 ![Prédiction](images/gift_pred.gif)
 
 **Fonctionnalités** :
+
 - **Formulaire de profil** : Type de poste, expérience, compétences, localisation
 - **Prédiction instantanée** : Salaire estimé avec intervalle de confiance (±MAE)
 - **Explicabilité SHAP** : Contribution de chaque variable à la prédiction
@@ -243,45 +256,49 @@ DescriptionCleaner      # Nettoyage de texte
 ![Prédiction détaillée](images/gift_pred_02.gif)
 
 **Comparaisons avancées** :
-- 📊 **Par secteur** : Tech, Banque, ESN, Assurance, etc.
-- 🌍 **Par ville** : Paris, Lyon, Toulouse, Bordeaux, etc.
-- ⏱️ **Projection carrière** : Évolution salariale sur 10 ans
-- 🔧 **Impact des compétences** : Gain salarial par skill (+Python, +AWS, +ML/DL)
+-  **Par secteur** : Tech, Banque, ESN, Assurance, etc.
+-  **Par ville** : Paris, Lyon, Toulouse, Bordeaux, etc.
+- ⏱ **Projection carrière** : Évolution salariale sur 10 ans
+-  **Impact des compétences** : Gain salarial par skill (+Python, +AWS, +ML/DL)
 
 ---
 
-### 2. 📊 Module Marché
+### 2. Module Marché
+
+ > _«Exploration interactive des données : filtres par poste, ville, secteur ou compétences, avec visualisations des distributions et impacts salariaux observés.»_
 
 ![Marché](images/gift_marche.gif)
 
 **Onglets d'analyse** :
 
-**📈 Vue d'ensemble**
+** Vue d'ensemble**
 - Distribution des salaires (histogramme + boxplot)
 - Salaire médian par type de contrat
 - Évolution salaire vs expérience
 
-**💼 Jobs & Secteurs**
+** Jobs & Secteurs**
 - Top 10 métiers Data les mieux payés
 - Salaires par secteur d'activité
 - Multiplicateurs sectoriels (Tech: +8%, Banque: +12%)
 
-**🌍 Géographie**
+** Géographie**
 - Top 10 villes par salaire moyen
 - Heatmap France (salaires moyens par région)
 - Multiplicateurs géographiques (Paris: +15%)
 
-**🔧 Compétences**
+** Compétences**
 - Fréquence des compétences (Python: 68%, SQL: 72%)
 - Impact salarial par compétence (+Python: +3.2k€, +AWS: +5.8k€)
 
-**🎯 Combinaisons**
+** Combinaisons**
 - Stacks techniques populaires (Python+SQL+Cloud, etc.)
 - ROI des combinaisons (gains salariaux)
 
 ---
 
-### 3. 🎓 Module Carrière
+### 3. Module Carrière
+
+> _« Simulation de l’impact de décisions concrètes (ex. : localisation, acquisition de compétences) et projection de trajectoire fondée sur la distribution réelle des salaires par expérience.. »_
 
 ![Carrière](images/gift_carriere.gif)
 
@@ -308,7 +325,7 @@ DescriptionCleaner      # Nettoyage de texte
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 ### Prérequis
 
@@ -342,56 +359,56 @@ L'application sera accessible à l'adresse : **http://localhost:8501**
 
 ---
 
-## 📁 Structure du projet
+##  Structure du projet
 
 ```
 Projet_Salaires_Data/
 │
-├── 01_Accueil.py                    # 🏠 Page d'accueil Streamlit
+├── 01_Accueil.py                    #  Page d'accueil Streamlit
 │
-├── pages/                            # 📄 Pages de l'application
-│   ├── 01_Prediction.py             # 🔮 Module prédiction
-│   ├── 02_Marche.py                 # 📊 Module marché
-│   └── 03_Carriere.py               # 🎓 Module carrière
+├── pages/                            #  Pages de l'application
+│   ├── 01_Prediction.py             #  Module prédiction
+│   ├── 02_Marche.py                 #  Module marché
+│   └── 03_Carriere.py               #  Module carrière
 │
-├── internal/                         # ⚙️  Implémentations internes
+├── internal/                         #   Implémentations internes
 │   ├── prediction_display_impl.py
 │   ├── prediction_comparisons_impl.py
 │   ├── prediction_actions_impl.py
 │   ├── career_*.py
 │   └── market_*.py
 │
-├── utils/                            # 🔧 Utilitaires
+├── utils/                            #  Utilitaires
 │   ├── config.py
 │   ├── model_utils.py
 │   └── feature_engineer.py
 │
-├── models/                           # 🤖 Modèles ML
+├── models/                           #  Modèles ML
 │   ├── best_model_XGBoost.pkl
 │   └── modeling_report_v7.json
 │
-├── scripts/                          # 📜 Scripts de traitement
+├── scripts/                          #  Scripts de traitement
 │   ├── data_cleaning_refactored_part1.py
 │   ├── data_cleaning_refactored_part2.py
 │   └── modeling_refactored.py
 │
-├── tests/                            # 🧪 Tests (99 tests)
+├── tests/                            #  Tests (99 tests)
 │   ├── test_model_utils.py
 │   ├── test_modeling_refactored.py
 │   └── test_simplified.py
 │
-├── images/                           # 🖼️  GIFs de démonstration
+├── images/                           #   GIFs de démonstration
 │   ├── gift_acceuil.gif
 │   ├── gift_pred.gif
 │   ├── gift_marche.gif
 │   └── gift_carriere.gif
 │
-└── requirements.txt                  # 📦 Dépendances
+└── requirements.txt                  #  Dépendances
 ```
 
 ---
 
-## 🛠️ Technologies utilisées
+##  Technologies utilisées
 
 ### Frontend
 - **Streamlit** 1.31 - Interface web
@@ -414,7 +431,7 @@ Projet_Salaires_Data/
 
 ---
 
-## 🚧 Axes d'amélioration
+##  Axes d'amélioration
 
 ### Court terme
 - [ ] Ajout de sources de données (Indeed, LinkedIn)
